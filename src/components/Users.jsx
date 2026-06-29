@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Users.css";
 import AddUserModal from "./AddUserModal";
-
+import api from "../services/api";
 const Users = ({ token }) => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");

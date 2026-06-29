@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
@@ -21,7 +21,7 @@
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -108,4 +108,33 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+} */
+
+
+.dashboard,
+.main,
+.table-box,
+.table-wrapper,
+table {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.project-tabs {
+  border: none;
+}
+
+.active-tab {
+  color: #14b8a6;
+  border-bottom: none;
+}
+
+hr {
+  display: none;
+}
+
+*::before,
+*::after {
+  border-top: none;
 }
