@@ -138,7 +138,7 @@ const Sidebar = () => {
       icon: <LayoutDashboard size={18} />,
     },
     {
-      name: "Wallets",
+      name: "wallets",
       path: "/wallets",
       icon: <Wallet size={18} />,
     },

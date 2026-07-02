@@ -108,6 +108,17 @@ const Users = ({ token }) => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
+
+{/* <input 
+type="text"
+placeholder="search users..."
+value={search}
+onChange={(e)=>setSearch(e.target.value)}
+/> */}
+
+
+
+
       <select
         value={role}
         onChange={(e) => setRole(e.target.value)}
@@ -144,18 +155,48 @@ const Users = ({ token }) => {
         {users.length > 0 ? (
           users.map((user) => (
             <tr key={user._id}>
-              <td>
-                <div className="user-info">
-                  <div className="avatar">
+              {/* <td>
+                 <div className="user-info"> */}
+                  {/* <div className="avatar">
                     {user?.name?.charAt(0)?.toUpperCase()}
-                  </div>
+                  </div>  */}
 
-                  <div>
+
+
+
+
+
+
+
+
+
+
+                  {/* <div>
                     <div>{user.name}</div>
                     <small>{user.email}</small>
                   </div>
                 </div>
-              </td>
+              </td> */}
+
+
+
+   
+
+   <td>
+  <div className="user-info">
+    <div className="avatar">
+      {user.firstName?.charAt(0).toUpperCase()}
+      {user.lastName?.charAt(0).toUpperCase()}
+    </div>
+
+    <div>
+      <div>
+        {user.firstName} {user.lastName}
+      </div>
+      <small>{user.email}</small>
+    </div>
+  </div>
+</td>
 
               <td>
                 <span className="role-badge">
