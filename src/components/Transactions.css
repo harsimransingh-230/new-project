@@ -1,0 +1,257 @@
+.transactions-page {
+  padding: 24px;
+  min-height: calc(100vh - 40px);
+  background: #f6fbff;
+}
+
+.transactions-hero {
+  margin-bottom: 20px;
+}
+
+.transactions-hero h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.transactions-hero p {
+  margin: 8px 0 0;
+  color: #475569;
+  font-size: 15px;
+}
+
+.transactions-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+  padding: 24px;
+}
+
+.transactions-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.transactions-tabs button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.transactions-tabs button.active {
+  background: #14b8a6;
+  color: #ffffff;
+}
+
+.transactions-filters {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.filter-search input,
+.transactions-filters select {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  outline: none;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.transactions-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  background: #f8fafc;
+  border-radius: 20px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summary-card span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.summary-card strong {
+  font-size: 28px;
+  color: #0f172a;
+}
+
+.transactions-table-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 18px 20px;
+  text-align: left;
+  color: #334155;
+  font-size: 14px;
+}
+
+.transactions-table th {
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: #f8fafc;
+}
+
+.transactions-table tbody tr {
+  border-bottom: 1px solid #eef2ff;
+}
+
+.transactions-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.type-pill,
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.type-pill.incoming {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.type-pill.outgoing {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-pill.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-pill.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-pill.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.amount.positive {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.amount.negative {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.view-link {
+  color: #0f766e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.transactions-error {
+  margin-bottom: 16px;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.empty-row {
+  text-align: center;
+  padding: 32px 0;
+  color: #64748b;
+}
+
+.transactions-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pagination-controls button,
+.pagination-controls select {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-controls button.page-active {
+  background: #0f766e;
+  color: white;
+  border-color: #0f766e;
+}
+
+@media (max-width: 1100px) {
+  .transactions-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .transactions-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .transactions-page {
+    padding: 18px;
+  }
+
+  .transactions-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .transactions-table th,
+  .transactions-table td {
+    padding: 12px 14px;
+  }
+}

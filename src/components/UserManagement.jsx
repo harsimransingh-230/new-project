@@ -20,6 +20,7 @@ const UserManagement = () => {
   const [selectedRole, setSelectedRole] = useState(null);
 
   const token = localStorage.getItem("token");
+const [deleting, setDeleting] = useState(false);
 
   const getRoles = async () => {
     try {
@@ -37,28 +38,80 @@ const UserManagement = () => {
     }
   };
 
-  const deleteRole = async () => {
-    try {
-      await axios.delete(
-        `https://vaultx-user-api.staging-host.com/api/v1/auth/admin/delete-role/${roleId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+
+
+const deleteRole = async () => {
+  if (!roleId) {
+    alert("Role ID not found.");
+    return;
+  }
+
+  try {
+    setDeleting(true);
+
+    console.log("Deleting Role ID:", roleId);
+
+    const response = await axios.delete(
+      `https://vaultx-user-api.staging-host.com/api/v1/auth/admin/delete-role/${roleId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Delete Response:", response.data);
+
+    alert(response.data.message || "Role deleted successfully");
+
+    setShowDeleteModal(false);
+    setRoleId("");
+    setSelectedRole(null);
+
+    getRoles();
+  } catch (error) {
+    console.error("Delete Role Error:", error);
+
+    if (error.response) {
+      console.log("Status:", error.response.status);
+      console.log("Data:", error.response.data);
+
+      alert(
+        error.response.data?.message ||
+          `Error ${error.response.status}: Failed to delete role`
       );
-
-      alert("Role deleted successfully");
-
-      setRoleId("");
-      setShowDeleteModal(false);
-
-      getRoles();
-    } catch (error) {
-      console.log(error);
-      alert("Failed to delete role");
+    } else if (error.request) {
+      alert("No response received from the server.");
+    } else {
+      alert(error.message);
     }
-  };
+  } finally {
+    setDeleting(false);
+  }
+};
+  // const deleteRole = async () => {
+  //   try {
+  //     await axios.delete(
+  //       `https://vaultx-user-api.staging-host.com/api/v1/auth/admin/delete-role/${roleId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     alert("Role deleted successfully");
+
+  //     setRoleId("");
+  //     setShowDeleteModal(false);
+
+  //     getRoles();
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert("Failed to delete role");
+  //   }
+  // };
 
   useEffect(() => {
     getRoles();
@@ -185,78 +238,82 @@ const UserManagement = () => {
             )}
 
             <div className="roles-grid">
-              {roles.map((role) => (
-                <div
-                  className="role-card"
-                  key={role._id}
-                >
-                  <div className="role-top">
+              {roles.map((role) => {
+                const roleIdValue = role.id || role._id;
 
-                    <h3>{role.name}</h3>
+                return (
+                  <div
+                    className="role-card"
+                    key={roleIdValue || role.name}
+                  >
+                    <div className="role-top">
 
-                    <span className="permission-badge">
-                      {role.permissions?.length || 0}
-                      {" "}Permissions
-                    </span>
+                      <h3>{role.name}</h3>
 
-                  </div>
+                      <span className="permission-badge">
+                        {role.permissions?.length || 0}
+                        {" "}Permissions
+                      </span>
 
-                  <p className="role-description">
-                    {role.description || "No description"}
-                  </p>
+                    </div>
 
-                  <div className="permissions-list">
+                    <p className="role-description">
+                      {role.description || "No description"}
+                    </p>
 
-                    {role.permissions?.length > 0 ? (
-                      role.permissions.map(
-                        (permission, index) => (
-                          <div
-                            className="permission-row"
-                            key={index}
-                          >
-                            <span>
-                              {permission.permissionName ||
-                                permission.name ||
-                                permission}
-                            </span>
+                    <div className="permissions-list">
 
-                            <span className="enabled">
-                              Enabled
-                            </span>
-                          </div>
+                      {role.permissions?.length > 0 ? (
+                        role.permissions.map(
+                          (permission, index) => (
+                            <div
+                              className="permission-row"
+                              key={index}
+                            >
+                              <span>
+                                {permission.permissionName ||
+                                  permission.name ||
+                                  permission}
+                              </span>
+
+                              <span className="enabled">
+                                Enabled
+                              </span>
+                            </div>
+                          )
                         )
-                      )
-                    ) : (
-                      <p>No permissions assigned</p>
-                    )}
+                      ) : (
+                        <p>No permissions assigned</p>
+                      )}
 
+                    </div>
+
+                    <div className="role-actions">
+
+                      <button
+                        className="edit-btn"
+                        onClick={() => {
+                          setSelectedRole(role);
+                          setShowEditModal(true);
+                        }}
+                      >
+                        Edit Permissions
+                      </button>
+
+                      <button
+                        className="delete-btn"
+                        onClick={() => {
+                          setRoleId(roleIdValue);
+                          setShowDeleteModal(true);
+                        }}
+                      >
+                        Delete
+                      </button>
+
+                    </div>
                   </div>
-
-                  <div className="role-actions">
-
-                    <button
-                      className="edit-btn"
-                      onClick={() => {
-                        setSelectedRole(role);
-                        setShowEditModal(true);
-                      }}
-                    >
-                      Edit Permissions
-                    </button>
-
-                    <button
-                      className="delete-btn"
-                      onClick={() => {
-                        setRoleId(role._id);
-                        setShowDeleteModal(true);
-                      }}
-                    >
-                      Delete
-                    </button>
-
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

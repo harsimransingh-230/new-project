@@ -424,9 +424,10 @@ import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import Otp from "./components/Otp";
 import Dashboard from "./components/Dashboard";
-import Sidebar from "./components/Sidebar"; // <-- Fixed
+import Sidebar from "./components/Sidebar";
 import ProfileSettings from "./components/ProfileSettings";
 import UserManagement from "./components/UserManagement";
+import Transactions from "./components/Transactions";
 // import Wallets from "./components/Wallets";
 
 function Layout({ children }) {
@@ -475,6 +476,15 @@ function App() {
           element={
             <Layout>
               <Dashboard />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/transactions"
+          element={
+            <Layout>
+              <Transactions />
             </Layout>
           }
         />
