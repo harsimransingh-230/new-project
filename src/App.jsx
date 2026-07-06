@@ -428,7 +428,8 @@ import Sidebar from "./components/Sidebar";
 import ProfileSettings from "./components/ProfileSettings";
 import UserManagement from "./components/UserManagement";
 import Transactions from "./components/Transactions";
-// import Wallets from "./components/Wallets";
+import Wallets from "./components/wallets";
+import PendingApprovals from "./components/PendingApprovals";
 
 function Layout({ children }) {
   return (
@@ -489,7 +490,6 @@ function App() {
           }
         />
 
-        {/* Uncomment when Wallets component exists
         <Route
           path="/wallets"
           element={
@@ -498,7 +498,15 @@ function App() {
             </Layout>
           }
         />
-        */}
+
+        <Route
+          path="/approvals"
+          element={
+            <Layout>
+              <PendingApprovals />
+            </Layout>
+          }
+        />
 
         <Route
           path="/usermanagement"

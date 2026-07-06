@@ -109,6 +109,7 @@ const ActivityLogs = () => {
       console.log(error);
     }
   };
+// 
 
   return (
     <div className="activity-wrapper">
