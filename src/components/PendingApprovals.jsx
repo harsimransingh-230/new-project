@@ -392,9 +392,36 @@ const PendingApprovals = () => {
 
   const [search, setSearch] = useState("");
 
-  
-const [activeTab, setActiveTab] = useState("withdraw");
-const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("withdraw");
+  const [loading, setLoading] = useState(false);
+
+  const normalizeArray = (value) => {
+    if (Array.isArray(value)) return value;
+    if (Array.isArray(value?.data)) return value.data;
+    if (Array.isArray(value?.updates)) return value.updates;
+    if (Array.isArray(value?.pendingUpdates)) return value.pendingUpdates;
+    if (Array.isArray(value?.items)) return value.items;
+    if (Array.isArray(value?.result)) return value.result;
+    if (Array.isArray(value?.transactions)) return value.transactions;
+    if (Array.isArray(value?.signers)) return value.signers;
+
+    if (value && typeof value === "object") {
+      for (const key of [
+        "updates",
+        "pendingUpdates",
+        "items",
+        "result",
+        "transactions",
+        "signers",
+        "data",
+      ]) {
+        const nested = value[key];
+        if (Array.isArray(nested)) return nested;
+      }
+    }
+
+    return [];
+  };
 
   useEffect(() => {
     loadWithdrawData();
@@ -408,12 +435,9 @@ const [loading, setLoading] = useState(false);
         "/auth/multisig/get-pending-transactions?page=1&limit=10"
       );
 
-      const data =
-        res.data?.data?.transactions ||
-        res.data?.data ||
-        [];
+      const data = normalizeArray(res.data);
 
-      setWithdraws(Array.isArray(data) ? data : []);
+      setWithdraws(data);
     } catch (err) {
       console.log(err);
       setWithdraws([]);
@@ -428,12 +452,9 @@ const [loading, setLoading] = useState(false);
         "/auth/multisig/get-pending-multisig-config-updates?page=1&limit=10"
       );
 
-      const data =
-        res.data?.data?.updates ||
-        res.data?.data ||
-        [];
-console.log(res.data);
-      setUpdates(Array.isArray(data) ? data : []);
+      const data = normalizeArray(res.data);
+
+      setUpdates(data);
     } catch (err) {
       console.log(err);
       setUpdates([]);
@@ -448,12 +469,9 @@ console.log(res.data);
         "/auth/projects/signers?page=1&limit=1000"
       );
 
-      const data =
-        res.data?.data?.signers ||
-        res.data?.data ||
-        [];
+      const data = normalizeArray(res.data);
 
-      setSigners(Array.isArray(data) ? data : []);
+      setSigners(data);
     } catch (err) {
       console.log(err);
       setSigners([]);
@@ -466,11 +484,7 @@ console.log(res.data);
     try {
       const res = await api.get("/auth/get-profile");
 
-      setProfile(
-        res.data?.data ||
-        res.data?.profile ||
-        {}
-      );
+      setProfile(res.data?.data || res.data?.profile || res.data || {});
     } catch (err) {
       console.log(err);
       setProfile({});
